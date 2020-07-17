@@ -1,0 +1,99 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+	<h2>Directorio de las partes</h2>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<div class="text-center alert alert-{{ message.tags }}">
+	{{ message|safe }}
+</div>
+{% endfor %}
+{% endif %}
+
+{% if request.user.is_authenticated %}
+<nav class="navbar navbar-expand">
+	<ul>
+		<div class="busqueda">
+			<form class="form-inline my-2 my-md-0" method="POST" action="{% url 'persona:buscar' %}">
+				{% csrf_token %}
+				<input type="text" class="form-control mr-sm-2" name="buscalo" placeholder="ID, Nombre o Apellido">
+				<div class="btn-group">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+				</div>
+			</form>
+		</div>
+	</ul>
+	<ul>
+		<!-- <a class="btn btn-primary" href="{% url 'persona:listado' %}">Listado Completo</a> -->
+		<a class="btn btn-primary" href="{% url 'persona:registrar' %}">Agregar</a>
+	</ul>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover table-borderled">
+				<thead>
+					<tr>
+						<td># C.C.</td>
+						<td>Nombre(s) y Apellido(s)</td>
+						<td>Dirección</td>
+						<td>Telefono</td>
+						<td>Ciudad</td>
+						<td>Correo</td>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% if object_list %}
+					{% for persona in object_list %}
+					<tr>
+						<td>{{ persona.documento }}</td>
+						<td><a href="{% url 'persona:detalle' persona.documento %}">{{ persona.nombre }}
+								{{ persona.apellido }}</a> </td>
+						<td>{{ persona.direccion }}</td>
+						<td>{{ persona.telefono }}</td>
+						<td>{{ persona.ciudad }}</td>
+						<td>{{ persona.email }}</td>
+					</tr>
+					{% endfor %}
+
+					{% else %}
+					<div class="alert alert-dismissible alert-warning">
+						<h4 class="alert-heading">Atención!</h4>
+						<p class="mb-0">No Hay Personas Registradas.</p>
+					</div>
+					{% endif %}
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-md-10 mx-auto">
+			<ul class="list-inline text-center">
+				{% if page_obj.has_previous %}
+				<li class="list-inline-item">
+					<a class="btn btn-primary" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+				</li>
+				{% endif %}
+				{% if page_obj.has_next %}
+				<li class="list-inline-item">
+					<a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</div>
+{% else %}
+
+{% endif %}
+
+{% endblock%}

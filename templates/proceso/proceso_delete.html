@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center">
+	<h3>¿Esta seguro de eliminar el proceso ' {{ object.nombre }} ' ?</h3>
+	<p>
+		Aviso: Se eliminará los documento y acciones que estén relacionados con este proceso
+	</p>
+	<form method="post">
+		{% csrf_token %}
+		<div>
+			<p class="lead">
+				<button class="btn btn-danger" onClick="return confirm('¿Seguro que quieres borrar a {{ object.nombre }}?');" type="submit">Sí, eliminar</button>
+				<a class="btn btn-primary" href="{% url 'proceso:detalle' proceso.radicado %}">Cancelar</a>
+			</p>
+		</div>
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+	<h2>Registro Decretos</h2>
+	<!-- <p>Resize this responsive page to see the effect!</p> -->
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<form action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button type="submit" class="btn btn-primary">Guardar</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

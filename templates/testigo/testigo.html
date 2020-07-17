@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+    <h2>Directorio de Testigos</h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center active">
+                    {{ testigo.nombre }} {{ testigo.apellido }}
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Dirección
+                    <span>{{ testigo.direccion }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Telefono
+                    <span>{{ testigo.telefono }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Ciudad
+                    <span>{{ testigo.ciudad }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Correo Electronico
+                    <span>{{ testigo.email }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-primary" href="{% url 'testigo:actualizar' testigo.id %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'testigo:eliminar' testigo.id %}">Eliminar</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock%}

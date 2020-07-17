@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="text-center alert alert-{{ message.tags }}">
+    {{ message|safe }}
+</div>
+{% endfor %}
+{% endif %}
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-heading">
+                <!-- título -->
+                <h1>{{ entrada.titulo }}</h1>
+                <span class="subheading">Fecha: {{ entrada.fecha }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                {{ entrada.contenido|safe }}
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+{% endblock%}

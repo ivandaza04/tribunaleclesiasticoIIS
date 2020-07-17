@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center">
+	<h3>¿Esta seguro de eliminar {{ object.nombre }} del proceso "{{ object.proceso }}"?</h3>
+	<form method="post">
+		{% csrf_token %}
+		<div>
+			<p class="lead">
+				<button class="btn btn-danger" onClick="return confirm('¿Seguro que quieres borrar a {{ object.nombre }}?');" >Sí, Eliminar</button>
+				<a class="btn btn-primary" href="{% url 'file:detalle' file.id %}">Cancelar</a>
+			</p>
+		</div>
+	</form>
+</div>
+{% endblock %}

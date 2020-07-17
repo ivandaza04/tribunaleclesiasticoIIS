@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Su nombre de usuario y contraseña no coinciden. Inténtalo de nuevo.</p>
+{% endif %}
+
+<div class="card border-primary mx-auto" style="max-width: 20rem;">
+	<div class="card-header">Inicio de Sesión</div>
+	<div class="card-body mx-auto">
+		<form method="post">
+			{% csrf_token %}
+			<div class="row">
+				<div class="form-group">
+					<label for="username">Nombre De Usuario</label>
+					<input class="form-control" type="text" name="username">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group">
+					<label for="username">Contraseña:</label>
+					<input class="form-control" type="password" name="password">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group">
+					<input class="btn btn-primary" type="submit" value="Ingresar">
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+{% endblock %}

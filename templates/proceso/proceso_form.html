@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+	<h2>Registro de Procesos</h2>
+</div>
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Your account doesn't have access to this page. To proceed,
+	please login with an account that has access.</p>
+{% else %}
+<p>Please login to see this page.</p>
+{% endif %}
+{% endif %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="text-center alert alert-{{ message.tags }}">
+	{{ message|safe }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<form action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button class="btn btn-primary">Guardar</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

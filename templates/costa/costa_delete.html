@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center">
+	<h3>¿Esta seguro de eliminar la costa del proceso "{{ costa.proceso }}"?</h3>
+	<p>Aviso: Se eliminará los aportes que estén relacionados con esta costa</p>
+	<form method="post">
+		{% csrf_token %}
+		<div>
+			<p class="lead">
+				<button class="btn btn-danger" type="submit" onClick="return confirm('¿Seguro que quieres borrar esta costa?');">Sí, eliminar</button>
+				<a class="btn btn-primary" href="{% url 'costa:detalle' costa.proceso_id %}">Cancelar</a>
+			</p>
+		</div>
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+    <h2>Directorio de las partes</h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center active">
+                    {{ persona.nombre }} {{ persona.apellido }}
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Numero de documento de identidad
+                    <span>{{ persona.documento }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Dirección
+                    <span>{{ persona.direccion }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Telefono
+                    <span>{{ persona.telefono }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Ciudad
+                    <span>{{ persona.ciudad }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Correo Electronico
+                    <span>{{ persona.email }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-primary" href="{% url 'persona:actualizar' persona.documento %}">Editar</a>
+                    {% if request.user.is_superuser %}
+                    <a class="btn btn-danger" href="{% url 'persona:eliminar' persona.documento %}">Eliminar</a>
+                    {% else %}
+                    {% endif %}
+                </li>
+        </div>
+    </div>
+</div>
+{% endblock%}

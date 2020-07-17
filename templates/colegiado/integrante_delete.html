@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center">
+	<h3>¿Esta seguro de eliminar a '{{ object.nombre }} {{ object.apellido }}'?</h3>
+	<p>Aviso: Se eliminará los procesos que relacionados con esta persona</p>
+	<form method="post">
+		{% csrf_token %}
+		<div>
+			<p class="lead">
+				<button class="btn btn-danger" type="submit" onClick="return confirm('¿Seguro que quieres borrar a {{ object.nombre }}?');">Sí, eliminar</button>
+				<a class="btn btn-primary" href="{% url 'colegiado:detalle' colegiado.id %}">Cancelar</a>
+			</p>
+		</div>
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center">
+	<h3>¿Esta seguro de eliminar el abono {{ abono.id }} de la costa "{{ abono.costa }}"?</h3>
+	<form method="post">
+		{% csrf_token %}
+		<div>
+			<p class="lead">
+				<button class="btn btn-danger" onClick="return confirm('¿Seguro que quieres borrar este abono?');" type="submit">Sí, eliminar</button>
+				<a class="btn btn-primary" href="{% url 'abono:listado' %}">Cancelar</a>
+			</p>
+		</div>
+	</form>
+</div>
+{% endblock %}

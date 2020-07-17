@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+	<h2>Declaraciones Del Proceso</h2>
+</div>
+
+{% if request.user.is_authenticated %}
+
+{% if object_list %}
+<nav class="navbar navbar-expand">
+	<ul>
+		<div class="container">
+			<a class="btn btn-primary" href="{% url 'proceso:actividad' object_list.0.proceso_id %}">Actividad del
+				Proceso</a>
+		</div>
+	</ul>
+</nav>
+{% else %}
+{% endif %}
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover table-borderled">
+				<thead>
+					<tr>
+						<td>Proceso</td>
+						<td>Tipo</td>
+						<td>Fecha</td>
+						<td>Documento</td>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% if object_list %}
+					{% for declaracion in object_list %}
+					<tr>
+						<td><a href="{% url 'proceso:actividad' declaracion.proceso_id %}">{{ declaracion.proceso }}</a>
+						</td>
+						<td><a href="{% url 'declaracion:detalle' declaracion.id %}">{{ declaracion.nombre }}</a></td>
+						<td>{{ declaracion.fecha }}</td>
+						<td>
+							{% if declaracion.docfile %}
+							<a href="{{ declaracion.docfile.url }}">Ver</a>
+							{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+
+					{% else %}
+					<div class="alert alert-dismissible alert-warning">
+						<h4 class="alert-heading">Atención!</h4>
+						<p class="mb-0">No Hay Declaraciones Registradas.</p>
+					</div>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% else %}
+
+{% endif %}
+
+{% endblock%}

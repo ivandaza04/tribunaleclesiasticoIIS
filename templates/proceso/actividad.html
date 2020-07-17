@@ -1,0 +1,121 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+	<h2>Procesos De Nulidad Matrimonial</h2>
+	<!-- <p>Resize this responsive page to see the effect!</p> -->
+</div>
+
+{% if request.user.is_authenticated %}
+
+<nav class="navbar">
+	<div class="container">
+		<ul class="nav nav-tabs">
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+					aria-expanded="false">Agregar Actividad</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{% url 'accion:registrar' procesodata.radicado %}">Acción</a>
+					<a class="dropdown-item" href="{% url 'decreto:registrar' procesodata.radicado %}">Decreto</a>
+					<a class="dropdown-item" href="{% url 'declaracion:registrar' procesodata.radicado %}">Declaración
+						Parte</a>
+					<a class="dropdown-item"
+						href="{% url 'declaraciontestigo:registrar' procesodata.radicado %}">Declaración Testigo</a>
+					<a class="dropdown-item" href="{% url 'citacion:registrar' procesodata.radicado %}">Notificación</a>
+					<a class="dropdown-item" href="{% url 'acta:registrar' procesodata.radicado %}">Acta</a>
+					<a class="dropdown-item" href="{% url 'sentencia:registrar' procesodata.radicado %}">Sentencia</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+					aria-expanded="false">Ver</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{% url 'accion:listado' procesodata.radicado %}">Acciónes</a>
+					<a class="dropdown-item" href="{% url 'decreto:listado' procesodata.radicado %}">Decretos</a>
+					<a class="dropdown-item" href="{% url 'declaracion:listado' procesodata.radicado %}">Declaraciones
+						Partes</a>
+					<a class="dropdown-item"
+						href="{% url 'declaraciontestigo:listado' procesodata.radicado %}">Declaraciones
+						Testigos</a>
+					<a class="dropdown-item" href="{% url 'citacion:listado' procesodata.radicado %}">Notificaciónes</a>
+					<a class="dropdown-item" href="{% url 'acta:listado' procesodata.radicado %}">Acta</a>
+					<a class="dropdown-item" href="{% url 'sentencia:listado' procesodata.radicado %}">Sentencia</a>
+				</div>
+			</li>
+		</ul>
+	</div>
+</nav>
+{% else %}
+
+{% endif %}
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover table-borderled">
+				<thead>
+					<tr>
+						<th>NUMERO DEL RADICADO</th>
+						<th>Expediente</th>
+						<th>Proceso</th>
+						<th>Fecha</th>
+						<th>Tipo</th>
+						<th>Diocesis</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% if procesodata %}
+					<tr>
+						<td><a href="{% url 'proceso:detalle' procesodata.radicado %}">{{ procesodata.radicado }}</a></td>
+						<td>{{ procesodata.expediente }}</td>
+						<td>{{ procesodata.nombre }}</td>
+						<td>{{ procesodata.fecha }}</td>
+						<td>{{ procesodata.tipo }}</td>
+						<td>{{ procesodata.diocesis }}</td>
+					</tr>
+					{% else %}
+					<div class="alert alert-dismissible alert-warning">
+						<h4 class="alert-heading">Atención!</h4>
+						<p class="mb-0">No Hay Procesos Registrados.</p>
+					</div>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover table-borderled">
+				<thead>
+					<tr>
+						<th>Nombre Actividad del Proceso</th>
+						<th>Fecha</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if result_list %}
+					{% for value in result_list %}
+					<tr>
+						<td>{{ value.nombre__tipo }}</td>
+						<td>{{ value.fecha }}</td>
+					</tr>
+					{% endfor %}
+
+					{% else %}
+					<div class="alert alert-dismissible alert-warning">
+						<h4 class="alert-heading">Atención!</h4>
+						<p class="mb-0">No Hay Acciones En Este Proceso</a>.</p>
+					</div>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<hr>
+
+{% endblock%}

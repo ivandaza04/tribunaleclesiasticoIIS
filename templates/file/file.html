@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+    <h2>{{ file.proceso }}</h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Numero de Radicado del Proceso:
+                        <th>
+                        <td>{{ file.proceso }}
+                        <td>
+                    </tr>
+                    <tr>
+                        <th>Nombre:
+                        <th>
+                        <td>{{ file.nombre }}
+                        <td>
+                    </tr>
+                    <tr>
+                        <th>Documento:
+                        <th>
+                        <td>
+                            {% if file.docfile %}
+							<a href="{{ file.docfile.url }}">Ver</a>
+							{% endif %}
+                        <td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<li class="list-group-item d-flex justify-content-between bg-light">
+    <a class="btn btn-primary" href="{% url 'file:actualizar' file.id %}">Editar</a>
+    <a class="btn btn-primary" href="{% url 'file:listado' file.proceso_id %}">Continuar</a>
+</li>
+{% endblock%}

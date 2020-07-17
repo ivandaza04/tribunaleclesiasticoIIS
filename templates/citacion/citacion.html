@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+    <h2>{{ citacion.nombre }}</h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    NOMBRE DEL PROCESO
+                    <span><a href="{% url 'proceso:detalle' citacion.proceso_id %}">{{ citacion.proceso }}</a></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Particular Citado
+                    <a href="{% url 'persona:detalle' citacion.citado_id %}">{{ citacion.citado }}</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Fecha
+                    <span>{{ citacion.fecha }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Se Cita el dia:
+                    <span>{{ citacion.citacion }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    A la Hora
+                    <span>{{ citacion.hora | time:"h i a" }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Citación Numero
+                    <span>{{ citacion.numero }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Documento
+                    {% if citacion.docfile %}
+                    <a href="{{ citacion.docfile.url }}">Ver</a>
+                    {% endif %}
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-primary" href="{% url 'citacion:actualizar' citacion.id %}">Editar</a>
+                    <a class="btn btn-primary" href="{% url 'proceso:actividad' citacion.proceso_id %}">Continuar</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-danger" href="{% url 'citacion:eliminar' citacion.id %}">Eliminar</a>
+                </li>
+                {% else %}
+
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock%}

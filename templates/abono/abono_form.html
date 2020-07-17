@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+	<h2>Registro de Abono de Costas</h2>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<form action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button class="btn btn-primary">Guardar</button>
+			</form>
+			<button class="btn btn-primary my-2" onclick="javascript:history.back();">Cancelar</button>
+		</div>
+	</div>
+</div>
+{% endblock %}

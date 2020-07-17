@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+    <h2>Integrante del Colegiado</h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center active">
+                    {{ colegiado.nombre }} {{ colegiado.apellido }}
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Ciudad
+                    <span>{{ colegiado.ciudad }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-primary" href="{% url 'colegiado:actualizar' colegiado.id %}">Editar</a>
+                    {% if request.user.is_superuser %}
+                    <a class="btn btn-danger" href="{% url 'colegiado:eliminar' colegiado.id %}">Eliminar</a>
+                    {% else %}
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

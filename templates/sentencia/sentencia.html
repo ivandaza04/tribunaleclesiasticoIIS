@@ -1,0 +1,46 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+    <h2>{{ sentencia.nombre }}</h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    NOMBRE DEL PROCESO
+                    <span><a href="{% url 'proceso:actividad' sentencia.proceso_id %}">{{ sentencia.proceso }}</a></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+					Ponente
+					<span>{{ sentencia.ponente }}</span>
+				</li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Fecha
+                    <span>{{ sentencia.fecha }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Documento
+                    {% if sentencia.docfile %}
+                    <a href="{{ sentencia.docfile.url }}">Ver</a>
+                    {% endif %}
+                </li>
+                {% if request.user.is_authenticated %}
+                <!-- Se debe usar sentencia.proceso_id poser llave foranea en una relacion unica -->
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-primary" href="{% url 'sentencia:actualizar' sentencia.proceso_id %}">Editar</a>
+                    <a class="btn btn-primary" href="{% url 'proceso:actividad' sentencia.proceso_id %}">Continuar</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-danger" href="{% url 'sentencia:eliminar' sentencia.proceso_id %}">Eliminar</a>
+                </li>
+                {% else %}
+
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock%}

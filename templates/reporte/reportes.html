@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+	<h2>Reportes Procesos de Nulidad matrimonial</h2>
+</div>
+
+<nav class="navbar navbar-expand">
+	<ul>
+		<div class="busqueda">
+			<form class="form-inline my-2 my-md-0" method="POST" action="{% url 'reporte:reporte' %}">
+				{% csrf_token %}
+				<input type="text" class="form-control mr-sm-2" name="fecha" placeholder="Fecha">
+				<!-- <input type="text" class="form-control mr-sm-2" name="canon" placeholder="Canon"> -->
+				<div class="btn-group">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+				</div>
+			</form>
+		</div>
+	</ul>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover table-borderled">
+				<thead>
+					<tr>
+						<th>Categoría de un Proceso</th>
+						<th class="text-sm text-sm-center">Numero de Procesos Año {{ date.0.fecha }}</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% if mycontent %}
+					{% for key, value in mycontent.items %}
+					<tr>
+						<td>{{ key }}</td>
+						<td class="text-sm text-sm-center">{{ value }}</td>
+					</tr>
+
+					{% endfor %}
+
+					{% else %}
+					<div class="alert alert-dismissible alert-warning">
+						<h4 class="alert-heading">Atención!</h4>
+						<p class="mb-0">Ingresa el año que desea consultar</p>
+					</div>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<hr>
+
+{% endblock%}

@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+    <h2>Abono Costa {{ abono.costa }}</h2>
+</div>
+
+<div class="container">
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+                <h6 class="my-0">Fecha</h6>
+                <small class="text-muted"></small>
+            </div>
+            <span class="text-muted">{{ abono.fecha }}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between bg-light">
+            <div class="text-success">
+                <h6 class="my-0">Valor</h6>
+                <small>Valor cancelado</small>
+            </div>
+            <span class="text-success">$ {{ abono.valor }}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between bg-light">
+            <a class="btn btn-primary" href="{% url 'abono:actualizar' abono.id %}">Editar</a>
+            <a class="btn btn-primary" href="{% url 'costa:abonos' abono.costa_id %}">Continuar</a>
+        </li>
+    </ul>
+</div>
+{% endblock%}

@@ -1,0 +1,83 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+    <h2>{{ acta.nombre }}</h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    NOMBRE DEL PROCESO
+                    <span><a href="{% url 'proceso:detalle' acta.proceso_id %}">{{ acta.proceso }}</a></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Fecha
+                    <span>{{ acta.fecha }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Presidente
+                    <span>{{ acta.presidente }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Defensor
+                    <span>{{ acta.defensor }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Primer Juez
+                    <span>{{ acta.juez1 }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Segundo Juez
+                    <span>{{ acta.juez2 }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Ponente
+                    <span>{{ acta.ponente }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Veto
+                    <span>{% for acta in acta.veto.all %}
+                        <ul>
+                            {{acta.nombre}}
+                        </ul>
+                        {% endfor %}
+                    </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Canon
+                    <span>{% for acta in acta.canon.all %}
+                        <ul>
+                            {{acta.idcanon}}
+                        </ul>
+                        {% endfor %}
+                    </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Documento
+                    {% if acta.docfile %}
+                    <a href="{{ acta.docfile.url }}">Ver</a>
+                    {% endif %}
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>{{ acta.consta }}</span>
+                </li>
+                {% if request.user.is_authenticated %}
+                <!-- Se debe usar acta.proceso_id poser llave foranea en una relacion unica -->
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-primary" href="{% url 'acta:actualizar' acta.proceso_id %}">Editar</a>
+                    <a class="btn btn-primary" href="{% url 'proceso:actividad' acta.proceso_id %}">Continuar</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-danger" href="{% url 'acta:eliminar' acta.proceso_id %}">Eliminar</a>
+                </li>
+                {% else %}
+
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock%}

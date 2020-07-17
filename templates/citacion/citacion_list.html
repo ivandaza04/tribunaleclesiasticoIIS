@@ -1,0 +1,63 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+	<h2>Notificaciones Del Proceso</h2>
+</div>
+
+{% if object_list %}
+<nav class="navbar navbar-expand">
+	<ul>
+		<div class="container">
+			<a class="btn btn-primary" href="{% url 'proceso:actividad' object_list.0.proceso_id %}">Actividad del
+				Proceso</a>
+		</div>
+	</ul>
+</nav>
+{% else %}
+{% endif %}
+
+{% if request.user.is_authenticated %}
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover table-borderled">
+				<thead>
+					<tr>
+						<td>Proceso</td>
+						<td>Tipo</td>
+						<td>Citado</td>
+						<td>Fecha</td>
+						<td>Fecha Citación</td>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% if object_list %}
+					{% for citacion in object_list %}
+					<tr>
+						<td><a href="{% url 'proceso:actividad' citacion.proceso_id %}">{{ citacion.proceso }}</a></td>
+						<td><a href="{% url 'citacion:detalle' citacion.id %}">{{ citacion.nombre }}</a></td>
+						<td>{{ citacion.citado }}</td>
+						<td>{{ citacion.fecha }}</td>
+						<td>{{ citacion.citacion }} a {{ citacion.hora }}</td>
+					</tr>
+					{% endfor %}
+
+					{% else %}
+					<div class="alert alert-dismissible alert-warning">
+						<h4 class="alert-heading">Atención!</h4>
+						<p class="mb-0">No Hay Notificaciones Registradas.</p>
+					</div>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% else %}
+
+{% endif %}
+
+{% endblock%}

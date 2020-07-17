@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+	<h2>Archivo Del Proceso</h2>
+</div>
+<nav class="navbar navbar-expand">
+	<ul>
+		<div class="busqueda">
+			<form class="form-inline my-2 my-md-0" method="POST" action="{% url 'file:buscar' %}">
+				{% csrf_token %}
+				<input type="text" class="form-control mr-sm-2" name="buscalo" placeholder="Buscar">
+				<div class="btn-group">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+				</div>
+			</form>
+		</div>
+	</ul>
+	<ul>
+		{% if request.user.is_authenticated %}
+		<a class="btn btn-primary" href="{% url 'file:registrar' %}">Agregar</a>
+		{% else %}
+
+		{% endif %}
+	</ul>
+</nav>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<td>Proceso</td>
+						<td>Nombre</td>
+						<td>Fecha</td>
+						<td>Documento</td>
+						<td>Opciones</td>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% if object_list %}
+					{% for file in object_list %}
+					<tr>
+						<td><a href="{% url 'proceso:detalle' file.proceso_id %}">{{ file.proceso }}</a></td>
+						<td><a href="{% url 'file:detalle' file.id %}">{{ file.nombre }}</a></td>
+						<td>{{ file.fecha }}</td>
+						<td>
+							{% if file.docfile %}
+							<a href="{{ file.docfile.url }}">Ver</a>
+							{% endif %}
+						</td>
+						<td>
+							<a href="{% url 'file:actualizar' file.id %}">Editar</a>
+							<a class="text-danger" href="{% url 'file:eliminar' file.id %}">Eliminar</a>
+						</td>
+					</tr>
+					{% endfor %}
+
+					{% else %}
+					<div class="alert alert-dismissible alert-warning">
+						<h4 class="alert-heading">Atención!</h4>
+						<p class="mb-0">No Hay Documentos</a>.</p>
+					</div>
+					{% endif %}
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock%}

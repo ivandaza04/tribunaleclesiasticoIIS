@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+    <h2>{{ declaraciontestigo.nombre }}</h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    NOMBRE DEL PROCESO
+                    <span><a
+                            href="{% url 'proceso:detalle' declaraciontestigo.proceso_id %}">{{ declaraciontestigo.proceso }}</a></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Fecha
+                    <span>{{ declaraciontestigo.fecha }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Testigo
+                    <a
+                        href="{% url 'testigo:detalle' declaraciontestigo.testigo_id %}">{{ declaraciontestigo.testigo }}</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Documento
+                    {% if declaraciontestigo.docfile %}
+                    <a href="{{ declaraciontestigo.docfile.url }}">Ver</a>
+                    {% endif %}
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                    <span>{{ declaraciontestigo.observacion }}</span>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-primary" href="{% url 'declaraciontestigo:actualizar' declaraciontestigo.id %}">Editar</a>
+                    <a class="btn btn-primary" href="{% url 'proceso:actividad' declaraciontestigo.proceso_id %}">Continuar</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-danger" href="{% url 'declaraciontestigo:eliminar' declaraciontestigo.id %}">Eliminar</a>
+                </li>
+                {% else %}
+
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock%}

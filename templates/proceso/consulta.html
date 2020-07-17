@@ -1,0 +1,96 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron">
+	<h2>Consultar Procesos De Nulidad Matrimonial</h2>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<div class="text-center alert alert-{{ message.tags }}">
+	{{ message|safe }}
+</div>
+{% endfor %}
+{% endif %}
+
+<nav class="navbar navbar-expand">
+	<ul>
+		<div class="busqueda">
+			<form class="form-inline my-2 my-md-0" method="POST" action="{% url 'proceso:consulta' %}">
+				{% csrf_token %}
+				<input type="text" class="form-control mr-sm-2" name="buscalo" placeholder="Buscar">
+				<div class="btn-group">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+				</div>
+			</form>
+		</div>
+	</ul>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>NUMERO DEL RADICADO</th>
+						<th>Expediente</th>
+						<th>Proceso</th>
+						<th>Fecha</th>
+						<th>Tipo</th>
+						<th>Diocesis</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% if procesodata %}
+					<tr>
+						<td>{{ procesodata.radicado }}</td>
+						<td>{{ procesodata.expediente }}</td>
+						<td>{{ procesodata.nombre }}</a></td>
+						<td>{{ procesodata.fecha }}</td>
+						<td>{{ procesodata.tipo }}</td>
+						<td>{{ procesodata.diocesis }}</td>
+					</tr>
+					{% else %}
+					<div class="alert alert-dismissible alert-secondary">
+						<strong>Ingresa el número de radicado del proceso que deseas consultar.</strong>
+					</div>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Fecha</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if result_list %}
+					{% for value in result_list %}
+					<tr>
+						<td>{{ value.nombre__tipo }}</td>
+						<td>{{ value.fecha }}</td>
+					</tr>
+					{% endfor %}
+
+					{% else %}
+					<div class="alert alert-dismissible alert-warning">
+						Por el momento no hay acciones en este proceso.
+					</div>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock%}

@@ -1,0 +1,65 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-left">
+	<h2>Decretos Del Proceso</h2>
+</div>
+
+{% if object_list %}
+<nav class="navbar navbar-expand">
+	<ul>
+		<div class="container">
+			<a class="btn btn-primary" href="{% url 'proceso:actividad' object_list.0.proceso_id %}">Actividad del
+				Proceso</a>
+		</div>
+	</ul>
+</nav>
+{% else %}
+{% endif %}
+
+{% if request.user.is_authenticated %}
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<table class="table table-hover table-borderled">
+				<thead>
+					<tr>
+						<td>Proceso</td>
+						<td>Decreto</td>
+						<td>Fecha</td>
+						<td>Documento</td>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% if object_list %}
+					{% for decreto in object_list %}
+					<tr>
+						<td><a href="{% url 'proceso:actividad' decreto.proceso_id %}">{{ decreto.proceso }}</a>
+						<td><a href="{% url 'decreto:detalle' decreto.id %}">{{ decreto.nombre }}</a></td>
+						<td>{{ decreto.fecha }}</td>
+						<td>
+							{% if decreto.docfile %}
+							<a href="{{ decreto.docfile.url }}">Ver</a>
+							{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+
+					{% else %}
+					<div class="alert alert-dismissible alert-warning">
+						<h4 class="alert-heading">Atención!</h4>
+						<p class="mb-0">No Hay Decretos Registrados.</p>
+					</div>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% else %}
+
+{% endif %}
+
+{% endblock%}
