@@ -94,13 +94,17 @@ class BuscarView(LoginRequiredMixin, ListView):
             buscar = request.POST['buscalo']
             if buscar != '':
                 object_list = Proceso.objects.filter(
-                    radicado=buscar) | Proceso.objects.filter(
+                    radicado__contains=buscar) | Proceso.objects.filter(
                         expediente=buscar) | Proceso.objects.filter(
                             nombre__contains=buscar) | Proceso.objects.filter(
                                 tipo__nombre=buscar) | Proceso.objects.filter(
                                     diocesis__nombre=buscar)
             else:
                 object_list = Proceso.objects.all()
+            return render(request, "proceso/proceso_list.html", {'object_list': object_list})
+        except Proceso.DoesNotExist:
+            object_list = Proceso.objects.all()
+            messages.success(self.request, self.success_message)
             return render(request, "proceso/proceso_list.html", {'object_list': object_list})
         except ValueError:
             object_list = Proceso.objects.all()

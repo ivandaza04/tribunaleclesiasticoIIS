@@ -9,6 +9,13 @@
     <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between lh-condensed">
             <div>
+                <h6 class="my-0">Expediente</h6>
+            </div>
+            <small class="text-muted"><a
+                    href="{% url 'proceso:detalle' costa.proceso_id %}">{{ costa.proceso_id }}</a></small>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
                 <h6 class="my-0">Fecha</h6>
                 <small class="text-muted"></small>
             </div>

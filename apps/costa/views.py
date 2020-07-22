@@ -86,7 +86,9 @@ class BuscarView(LoginRequiredMixin, ListView):
             buscar = request.POST['buscalo']
             if buscar != '':
                 object_list = Costa.objects.filter(
-                    proceso__expediente=buscar) | Costa.objects.filter(proceso__nombre=buscar)
+                    proceso__radicado__contains=buscar) | Costa.objects.filter(
+                        proceso__expediente=buscar) | Costa.objects.filter(
+                        proceso__nombre=buscar)
             else:
                 object_list = Costa.objects.all()
             return render(request, "costa/costa_list.html", {'object_list': object_list})
